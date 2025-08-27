@@ -5,7 +5,7 @@ export default function Loading() {
     return (
         <div style={style}>
             <GridLoader color="#0c4c7d" />
-            <h3 style={{ color: '#0c4c7d', }}>Loading...</h3>
+            <h3 style={{ color: '#0c4c7d', fontSize: 18 }}>Loading...</h3>
         </div>
     )
 }
