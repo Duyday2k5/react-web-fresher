@@ -16,6 +16,8 @@ import Loading from './components/Loading';
 import { useSelector } from 'react-redux';
 import AdminPage from './pages/admin';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { LayoutAdmin } from './components/Admin/LayoutAdmin';
+import { ManageOrderPage } from './pages/admin/order';
 
 const Layout = () => {
   return (
@@ -26,26 +28,13 @@ const Layout = () => {
     </div>
   )
 }
-const LayoutAdmin = () => {
-  const user = useSelector(state => state.account.user)
-  const isAdminRoute = window.location.startsWith('/admin');
-  const userRole = user.role;
-  return (
-    <div className='layout-app'>
-      {isAdminRoute && userRole === 'ADMIN' && <Header />}
-      {/* <Header /> */}
-      <Outlet />
-      {/* <Footer /> */}
-      {isAdminRoute && userRole === 'ADMIN' && <Footer />}
-    </div>
-  )
-}
 
 export default function App() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.account.isLoading);
   const isAuthenticated = useSelector(state => state.account.isAuthenticated);
   const getAccount = async () => {
-    if (window.location.pathname === '/login' || window.location.pathname === '/admin') return;
+    if (window.location.pathname === '/login' || window.location.pathname === '/register') return;
     const res = await callFetchAccount();
     if (res && res.data) {
       dispatch(doGetAccountAction(res.data))
@@ -91,6 +80,10 @@ export default function App() {
           path: "book",
           element: <BookPage />
         },
+        {
+          path: "order",
+          element: <ManageOrderPage />
+        }
       ]
     },
     {
@@ -104,7 +97,7 @@ export default function App() {
   ]);
 
   return (
-    (isAuthenticated === true || window.location.pathname === "/login" || window.location.pathname === "/admin") ? <RouterProvider router={router} /> : <Loading />
+    (isLoading === false || isAuthenticated === true || window.location.pathname === "/login" || window.location.pathname === "/register") ? <RouterProvider router={router} /> : <Loading />
   );
 }
 

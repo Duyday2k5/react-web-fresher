@@ -6,8 +6,8 @@ export const NotPermitted = () => {
     return (
         <Result
             status="403"
-            tile="403"
-            subTitle="Sorry you are not authorized to access this page!"
+            title="403"
+            subTitle="Sorry, you are not authorized to access this page!"
             extra={<Button type="primary"
                 onClick={() => navigate("/")}>
                 Back home</Button>}

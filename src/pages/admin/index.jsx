@@ -1,7 +1,9 @@
-export default function AdminPage() {
+const AdminPage = () => {
     return (
-        <div>
-            <h1>Admin Page</h1>
-        </div>
+        <>
+            Admin page
+        </>
     )
 }
+
+export default AdminPage;

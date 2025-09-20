@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isAuthenticated: false,
+    isLoading: true,
     user: {
         "email": "",
         "phone": "",
@@ -19,13 +20,25 @@ export const accountSlice = createSlice({
     reducers: {
         doLoginAction: (state, action) => {
             state.isAuthenticated = true;
-            state.isLoading = false;
-            state.user = action.payload.user;
+            isLoading: false;
+            state.user = action.payload;
         },
         doGetAccountAction: (state, action) => {
             state.isAuthenticated = true;
-            state.isLoading = false;
+            isLoading: false;
             state.user = action.payload.user;
+        },
+        doLogoutAction: (state, action) => {
+            localStorage.removeItem('access_token'); //xoa token dang xuat
+            isAuthenticated: false;
+            state.user = {
+                "email": "",
+                "phone": "",
+                "fullName": "",
+                "role": "",
+                "avatar": "",
+                "id": "",
+            }
         },
         //merge user old with new
         // updateUserInfo: (state, action) => {
@@ -39,7 +52,7 @@ export const accountSlice = createSlice({
     },
 });
 
-export const { doLoginAction, doGetAccountAction } = accountSlice.actions;
+export const { doLoginAction, doGetAccountAction, doLogoutAction } = accountSlice.actions;
 
 export const selectCount = (state) => state.account.value;
 
